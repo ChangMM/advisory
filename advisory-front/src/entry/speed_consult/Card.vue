@@ -296,7 +296,7 @@ export default {
   data () {
     return {
       m_total: 9,
-      m_card: 1,
+      m_card: 2,
       m_result: '',
       m_area: '', // 占地面积
       m_city: '', // 城市
@@ -320,7 +320,7 @@ export default {
       m_email: '',
       m_radio_1: '',
       m_radio_2: '',
-      m_step: 1
+      m_step: 7
     }
   },
   computed: {
@@ -415,6 +415,12 @@ export default {
       }
       this.m_step--
     },
+    f_check_num: function (s) {
+      if (s!== null && s!== '') {
+        return !isNaN(s)
+      }
+      return false
+    },
     f_check: function () {
       switch (this.m_step) {
         case 1:
@@ -424,7 +430,12 @@ export default {
           return this.m_city !== '' && this.m_city_text !== ''
           break
         case 3:
-          return this.m_area !== ''
+          if (!this.f_check_num(this.m_area)) {
+            this.$warn('占地面积只能为数字')
+            return false
+          } else {
+            return true
+          }
           break
         case 4:
           return this.m_land.length !== 0
@@ -436,7 +447,11 @@ export default {
           return this.m_dis_high !== '' && this.m_dis_center !=='' && this.m_dis_center !== ''
           break
         case 7:
-          return this.m_center_money !== '' && this.m_business_money !==''
+          if (!this.f_check_num(this.m_center_money)) {
+            this.$warn('核心资金只能为数字')
+            return false
+          }
+          return this.m_business_money !==''
           break
         case 8:
           return this.m_people_num !== '' && this.m_200_people_num !=='' && this.m_radio_1 !== ''

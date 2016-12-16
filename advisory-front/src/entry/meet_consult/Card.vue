@@ -562,6 +562,7 @@ export default {
           margin-top: 8px;
           padding:6px 40px 6px 10px;
           display: none;
+          border-radius: 4px;
         }
         textarea{
           padding:8px;

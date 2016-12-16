@@ -481,33 +481,17 @@ export default {
         this.m_result += '卡丁车或城市 SUV 赛道。\r\n'
       } else if (parseInt(this.m_area) >= 100 && parseInt(this.m_area) <300) {
         this.m_result += '体验赛道。\r\n'
-      } else if (parseInt(this.m_area) >= 300 && parseInt(this.m_area) <500) {
-        this.m_result += '四级赛道。\r\n'
-      } else if (parseInt(this.m_area) >= 500 && parseInt(this.m_area) <800) {
-        this.m_result += '三级赛道。\r\n'
-      } else if (parseInt(this.m_area) >= 800 && parseInt(this.m_area) <1000) {
-        this.m_result += '三级或二级赛道。\r\n'
-      } else if (parseInt(this.m_area) >= 1000 && parseInt(this.m_area) <2000) {
-        this.m_result += '二级赛道。\r\n'
-      } else if (parseInt(this.m_area) >= 2000) {
-        this.m_result += '一级赛道。\r\n'
+      } else if (parseInt(this.m_area) >= 300) {
+        this.m_result += '国际赛道。\r\n'
       }
 
       this.m_result +='现有资金适合建设'
       if (parseInt(this.m_center_money) < 2000) {
         this.m_result += '卡丁车或城市 SUV 赛道。\r\n'
-      } else if (parseInt(this.m_center_money) >= 2000 && parseInt(this.m_area) <8000) {
+      } else if (parseInt(this.m_center_money) >= 2000 && parseInt(this.m_area) < 15000) {
         this.m_result += '体验赛道。\r\n'
-      } else if (parseInt(this.m_center_money) >= 8000 && parseInt(this.m_area) <15000) {
-        this.m_result += '四级赛道。\r\n'
-      } else if (parseInt(this.m_center_money) >= 15000 && parseInt(this.m_area) <30000) {
-        this.m_result += '三级赛道。\r\n'
-      } else if (parseInt(this.m_center_money) >= 30000 && parseInt(this.m_area) <40000) {
-        this.m_result += '三级或二级赛道。\r\n'
-      } else if (parseInt(this.m_center_money) >= 40000 && parseInt(this.m_area) <60000) {
-        this.m_result += '二级赛道。\r\n'
-      } else if (parseInt(this.m_center_money) >= 60000) {
-        this.m_result += '一级赛道。\r\n'
+      } else if (parseInt(this.m_center_money) >= 15000) {
+        this.m_result += '国际赛道。\r\n'
       }
       return this.m_result
     },
@@ -612,10 +596,9 @@ export default {
         top:0;
         left:0;
         right:0;
-        bottom:0;
         width:260px;
         text-align: justify;
-        height:280px;
+        height:260px;
         margin: auto;
         font-size: 14px;
         letter-spacing: 2px;

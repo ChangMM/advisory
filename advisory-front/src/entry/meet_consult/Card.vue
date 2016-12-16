@@ -390,9 +390,7 @@ export default {
         top:0;
         left:0;
         right:0;
-        bottom:0;
         width:260px;
-        height:300px;
         margin: auto;
         font-size: 14px;
         letter-spacing: 2px;

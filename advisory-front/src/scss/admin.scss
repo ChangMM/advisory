@@ -1,0 +1,44 @@
+// @import "./_base.scss";
+#app{
+  box-sizing:border-box;
+  padding-top:60px;
+}
+html,body,div,p,ul,li,h1,h2,h3,h4,h5,input,textarea,dd,dt,dl,blockquote,b,span,img{
+  padding:0;
+  margin:0;
+  border:none;
+}
+html{
+  font-family:"PingFangSC-Regular","Helvetica Neue", Helvetica, "Lantinghei SC", "Hiragino Sans GB", "Microsoft YaHei", 微软雅黑, STHeiti, "WenQuanYi Micro Hei", SimSun, sans-serif;
+  font-feature-settings: 'kern' 1;
+  text-rendering: geometricPrecision;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 1px;
+}
+a{
+  cursor: pointer;
+  text-decoration: none;
+  color:inherit;
+}
+
+.main{
+  width: 950px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 140px;
+  padding-top: 20px;
+  position: relative;
+  box-sizing: border-box;
+  .main-left{
+    height:100%;
+    position: absolute;
+    top:20px;
+    left:0;
+    width:140px;
+  }
+  .main-right{
+    box-sizing: border-box;
+    padding-left: 40px;
+  }
+}

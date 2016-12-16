@@ -296,7 +296,7 @@ export default {
   data () {
     return {
       m_total: 9,
-      m_card: 2,
+      m_card: 1,
       m_result: '',
       m_area: '', // 占地面积
       m_city: '', // 城市
@@ -320,7 +320,7 @@ export default {
       m_email: '',
       m_radio_1: '',
       m_radio_2: '',
-      m_step: 7
+      m_step: 1
     }
   },
   computed: {

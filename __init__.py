@@ -185,7 +185,7 @@ def add_meet():  # 新增信息
         feedback = request.form['feedback']
         random = random_str()
 
-        user = Meet_advisory(city = city, random = random, job_type = job_type, area = area, money = money, money_from = money_from, name = name, email = email,phone = phone, job = job, workplace = workplace, info = info, info_more = info_more, feedback = feedback)
+        user = Meet_advisory(city = city, job_type = job_type, area = area, money = money, money_from = money_from, name = name, email = email,phone = phone, job = job, workplace = workplace, info = info, info_more = info_more, feedback = feedback, random = random)
         try:
             db.session.add(user)
             db.session.commit()
@@ -193,7 +193,7 @@ def add_meet():  # 新增信息
             print e.message
             db.session.rollback()
             return data2json('2', msg = '信息添加错误')
-        return data2json('1')        
+        return data2json('1', data = random)        
 
 
 @app.route('/api/all_meet', methods=['GET', 'POST'])
@@ -287,7 +287,7 @@ def meet_instance2dic(instance):
 
 def random_str(randomlength = 5):
     str = ''
-    chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'
+    chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
     length = len(chars) - 1
     random = Random()
     for i in range(randomlength):

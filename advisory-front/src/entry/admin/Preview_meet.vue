@@ -26,11 +26,11 @@
             <p><span class="label">项目所在城市：</span>{{item.city}}</p>
             <p><span class="label">预期投资金额：</span>{{item.money}}（亿元）</p>
             <p><span class="label">资金来源：</span>{{item.money_from}}</p>
-            <p><span class="label">拟建设内容：</span>{{item.info}} （{{item.info_more}}）</p>
+            <p><span class="label">拟建设内容：</span>{{item.info}} {{item.info_more ? "(" + item.info_more + ")" : ""}}</p>
           </td>
         </tr>
         <tr>
-          <td>反馈辞</td>
+          <td>备注</td>
           <td>
             <p>{{item.feedback}}</p>
           </td>

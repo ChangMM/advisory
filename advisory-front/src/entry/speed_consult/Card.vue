@@ -448,10 +448,14 @@ export default {
           break
         case 7:
           if (!this.f_check_num(this.m_center_money)) {
-            this.$warn('核心资金只能为数字')
+            this.$warn('建设资金只能为数字')
             return false
           }
-          return this.m_business_money !==''
+          if (!this.f_check_num(this.m_business_money)) {
+            this.$warn('商业配套资金只能为数字')
+            return false
+          }
+          return true
           break
         case 8:
           return this.m_people_num !== '' && this.m_200_people_num !=='' && this.m_radio_1 !== ''

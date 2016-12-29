@@ -21,58 +21,58 @@ class Speed_advisory(db.Model):
     __tablename__ = 'speed_advisory'
     id = db.Column(db.Integer, primary_key=True)
     province = db.Column(db.String(25), default='')
-    district = db.Column(db.String(25), default='') 
-    city = db.Column(db.String(25), default='') 
-    city_type = db.Column(db.String(25), default='') 
-    area = db.Column(db.String(25), default='') 
-    land = db.Column(db.String(25), default='') 
-    land_type = db.Column(db.String(25), default='') 
-    dis_high = db.Column(db.String(25), default='') 
-    dis_center = db.Column(db.String(25), default='') 
-    dis_airplane = db.Column(db.String(25), default='') 
-    center_money = db.Column(db.String(25), default='') 
-    business_money = db.Column(db.String(25), default='') 
-    people_num = db.Column(db.String(25), default='') 
-    people_200_num = db.Column(db.String(25), default='') 
-    view_type = db.Column(db.String(25), default='') 
-    city_num = db.Column(db.String(25), default='') 
-    has_place = db.Column(db.String(25), default='') 
-    name = db.Column(db.String(25), default='') 
-    phone = db.Column(db.String(25), default='') 
-    job = db.Column(db.String(25), default='') 
-    workplace = db.Column(db.String(25), default='') 
-    email = db.Column(db.String(25), default='') 
+    district = db.Column(db.String(25), default='')
+    city = db.Column(db.String(25), default='')
+    city_type = db.Column(db.String(25), default='')
+    area = db.Column(db.String(25), default='')
+    land = db.Column(db.String(25), default='')
+    land_type = db.Column(db.String(25), default='')
+    dis_high = db.Column(db.String(25), default='')
+    dis_center = db.Column(db.String(25), default='')
+    dis_airplane = db.Column(db.String(25), default='')
+    center_money = db.Column(db.String(25), default='')
+    business_money = db.Column(db.String(25), default='')
+    people_num = db.Column(db.String(25), default='')
+    people_200_num = db.Column(db.String(25), default='')
+    view_type = db.Column(db.String(25), default='')
+    city_num = db.Column(db.String(25), default='')
+    has_place = db.Column(db.String(25), default='')
+    name = db.Column(db.String(25), default='')
+    phone = db.Column(db.String(25), default='')
+    job = db.Column(db.String(25), default='')
+    workplace = db.Column(db.String(25), default='')
+    email = db.Column(db.String(25), default='')
 
 
 class Meet_advisory(db.Model):
     __tablename__ = 'meet_advisory'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(25), default='') 
-    phone = db.Column(db.String(25), default='') 
-    job = db.Column(db.String(64), default='') 
-    workplace = db.Column(db.String(64), default='') 
+    name = db.Column(db.String(25), default='')
+    phone = db.Column(db.String(25), default='')
+    job = db.Column(db.String(64), default='')
+    workplace = db.Column(db.String(64), default='')
     email = db.Column(db.String(25), default='')
     job_type = db.Column(db.String(25), default='')
-    city = db.Column(db.String(25), default='') 
-    area = db.Column(db.String(25), default='') 
-    money = db.Column(db.String(25), default='') 
-    money_from = db.Column(db.String(25), default='') 
-    info = db.Column(db.String(64), default='') 
-    info_more = db.Column(db.String(25), default='') 
-    feedback = db.Column(db.String(300), default='') 
-    random = db.Column(db.String(25), default='') 
-    
-   
+    city = db.Column(db.String(25), default='')
+    area = db.Column(db.String(25), default='')
+    money = db.Column(db.String(25), default='')
+    money_from = db.Column(db.String(25), default='')
+    info = db.Column(db.String(64), default='')
+    info_more = db.Column(db.String(25), default='')
+    feedback = db.Column(db.String(300), default='')
+    random = db.Column(db.String(25), default='')
+
+
 
 @app.route('/')
 def index():  # 首页
-    return '123'
+    return redirect('/login')
 
 @app.route('/login', methods=['GET'])
 def login():
     if 'isLogin' in session:
         return redirect('/admin')
-    else:    
+    else:
         return render_template('login.html')
 
 
@@ -80,17 +80,17 @@ def login():
 def admin():
     if 'isLogin' in session:
         return render_template('admin.html')
-    else:    
+    else:
         return redirect('/login')
-        
+
 @app.route('/meet_consult', methods=['GET'])
 def meet_consult():
-    return render_template('meet_consult.html')  
-    
+    return render_template('meet_consult.html')
+
 
 @app.route('/speed_consult', methods=['GET'])
 def speed_consult():
-    return render_template('speed_consult.html')     
+    return render_template('speed_consult.html')
 
 
 @app.route('/api/login', methods=['GET', 'POST'])
@@ -99,7 +99,7 @@ def is_login():
         if session['isLogin']:
             return data2json('1')
         else:
-            return data2json('2', msg = '尚未登陆')   
+            return data2json('2', msg = '尚未登陆')
     if request.method == 'POST':
         if (username == request.form['username']) and (password == request.form['password']):
             session['isLogin'] = True
@@ -116,7 +116,7 @@ def logout():  # 登出页
 @app.route('/loginout')
 def loginout():  # 登出页
     session.pop('isLogin', None)
-    return redirect('/login')    
+    return redirect('/login')
 
 
 @app.route('/api/add_speed', methods=['POST'])
@@ -140,9 +140,9 @@ def add_speed():  # 新增信息
         city_num = request.form['city_num']
         has_place = request.form['has_place']
         name =  request.form['name']
-        phone = request.form['phone'] 
-        job = request.form['job'] 
-        workplace = request.form['workplace'] 
+        phone = request.form['phone']
+        job = request.form['job']
+        workplace = request.form['workplace']
         email = request.form['email']
 
         user = Speed_advisory(province = province, district = district, city = city, city_type = city_type, area = area, land = land, land_type = land_type,
@@ -155,7 +155,7 @@ def add_speed():  # 新增信息
             print e.message
             db.session.rollback()
             return data2json('2', msg = '信息添加错误')
-        return data2json('1')        
+        return data2json('1')
 
 
 @app.route('/api/all_speed', methods=['GET', 'POST'])
@@ -164,7 +164,7 @@ def all_speed():
     speed_dic = []
     for i in speeds:
         speed_dic.append(speed_instance2dic(i))
-    return data2json(1, data = speed_dic)    
+    return data2json(1, data = speed_dic)
 
 
 @app.route('/api/add_meet', methods=['POST'])
@@ -176,12 +176,12 @@ def add_meet():  # 新增信息
         money = request.form['money']
         money_from = request.form['money_from']
         name =  request.form['name']
-        phone = request.form['phone'] 
-        email = request.form['email'] 
-        job = request.form['job'] 
-        workplace = request.form['workplace'] 
-        info = request.form['info'] 
-        info_more = request.form['info_more'] 
+        phone = request.form['phone']
+        email = request.form['email']
+        job = request.form['job']
+        workplace = request.form['workplace']
+        info = request.form['info']
+        info_more = request.form['info_more']
         feedback = request.form['feedback']
         random = random_str()
 
@@ -193,7 +193,7 @@ def add_meet():  # 新增信息
             print e.message
             db.session.rollback()
             return data2json('2', msg = '信息添加错误')
-        return data2json('1', data = random)        
+        return data2json('1', data = random)
 
 
 @app.route('/api/all_meet', methods=['GET', 'POST'])
@@ -202,7 +202,7 @@ def all_meet():
     meet_dic = []
     for i in speeds:
         meet_dic.append(meet_instance2dic(i))
-    return data2json(1, data = meet_dic)  
+    return data2json(1, data = meet_dic)
 
 
 @app.errorhandler(404)
@@ -231,11 +231,11 @@ def data2json(status, **args):
     data_before_json["msg"] = msg
     data_before_json["data"] = data
     return jsonify(data_before_json)
-    
-    
+
+
 def speed_instance2dic(instance):
     comment_dic = {}.fromkeys(('id' ,'province', 'district', 'city', 'city_type', 'area', 'land', 'land_type',
-            'dis_high', 'dis_center', 'dis_airplane', 'center_money', 'business_money', 'people_num', 
+            'dis_high', 'dis_center', 'dis_airplane', 'center_money', 'business_money', 'people_num',
             'people_200_num', 'view_type', 'city_num', 'has_place', 'name', 'email', 'phone', 'job', 'workplace'))
     comment_dic['id'] = instance.id
     comment_dic['province'] = instance.province
@@ -265,7 +265,7 @@ def speed_instance2dic(instance):
 
 
 def meet_instance2dic(instance):
-    comment_dic = {}.fromkeys(('id','city', 'job_type', 'area', 'money', 'money_from', 'name', 'email', 'phone', 'job', 'workplace', 
+    comment_dic = {}.fromkeys(('id','city', 'job_type', 'area', 'money', 'money_from', 'name', 'email', 'phone', 'job', 'workplace',
         'info', 'info_more', 'feedback', 'random'))
     comment_dic['id'] = instance.id
     comment_dic['city'] = instance.city
@@ -292,7 +292,7 @@ def random_str(randomlength = 5):
     random = Random()
     for i in range(randomlength):
         str+=chars[random.randint(0, length)]
-    return str    
+    return str
 
 
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'

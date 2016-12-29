@@ -113,12 +113,12 @@
                   <label class="radio-label" for="radio-2-3">三级</label>
                 </div>
                 <div class="radio-input-wrap">
-                  <input type="radio" name='radio-2' id='radio-2-3' value='四级' v-model="m_radio_2">
-                  <label class="radio-label" for="radio-2-3">四级</label>
+                  <input type="radio" name='radio-2' id='radio-2-4' value='四级' v-model="m_radio_2">
+                  <label class="radio-label" for="radio-2-4">四级</label>
                 </div>
                 <div class="radio-input-wrap">
-                  <input type="radio" name='radio-2' id='radio-2-3' value='体验赛道' v-model="m_radio_2">
-                  <label class="radio-label" for="radio-2-3">体验赛道</label>
+                  <input type="radio" name='radio-2' id='radio-2-5' value='体验赛道' v-model="m_radio_2">
+                  <label class="radio-label" for="radio-2-5">体验赛道</label>
                 </div>
               </div>
             </div>
@@ -200,7 +200,7 @@ export default {
   data () {
     return {
       m_total: 4,
-      m_card: 1,
+      m_card: 2,
       m_random: 'wer4T',
       m_name: '',
       m_phone: '',
@@ -216,7 +216,7 @@ export default {
       m_radio_2: '',
       m_radio_3: '',
       m_feedback: '',
-      m_step: 1
+      m_step: 4
     }
   },
   computed: {
@@ -260,6 +260,12 @@ export default {
         }
       })
     },
+    f_check_num: function (s) {
+      if (s!== null && s!== '') {
+        return !isNaN(s)
+      }
+      return false
+    },
     f_start: function () {
       this.m_card++
     },
@@ -272,7 +278,15 @@ export default {
           return this.m_job !== '' && this.m_workplace !== '' && this.m_radio_1 !== ''
           break
         case 3:
-          return this.m_area !== '' && this.m_city !== '' && this.m_money !== '' && this.m_money_from !== ''
+          if (!this.f_check_num(this.m_area)) {
+            this.$warn('建设用地只能为数字')
+            return false
+          }
+          if (!this.f_check_num(this.m_money)) {
+            this.$warn('投资金额只能为数字')
+            return false
+          }
+          return this.m_city !== '' && this.m_money_from !== ''
           break
         case 4:
           if (this.m_construct_content === '赛车场、赛道' || this.m_construct_content === '卡丁车场') {

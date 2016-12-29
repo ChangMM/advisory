@@ -200,7 +200,7 @@ export default {
   data () {
     return {
       m_total: 4,
-      m_card: 2,
+      m_card: 1,
       m_random: 'wer4T',
       m_name: '',
       m_phone: '',
@@ -216,7 +216,7 @@ export default {
       m_radio_2: '',
       m_radio_3: '',
       m_feedback: '',
-      m_step: 4
+      m_step: 1
     }
   },
   computed: {

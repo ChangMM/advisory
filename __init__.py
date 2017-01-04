@@ -158,6 +158,21 @@ def add_speed():  # 新增信息
         return data2json('1')
 
 
+@app.route('/api/delete_speed', methods=['POST'])
+def delete_speed():  # 删除信息
+    if request.method == 'POST':
+        id = request.form['id']
+        print id
+        user = Speed_advisory.query.filter_by(id = id).first()
+        try:
+            db.session.delete(user)
+            db.session.commit()
+        except OperationalError, e:
+            print e.message
+            db.session.rollback()
+            return data2json('2', msg = '信息删除错误，请重试')
+        return data2json('1')
+
 @app.route('/api/all_speed', methods=['GET', 'POST'])
 def all_speed():
     speeds = Speed_advisory.query.all()
@@ -194,6 +209,21 @@ def add_meet():  # 新增信息
             db.session.rollback()
             return data2json('2', msg = '信息添加错误')
         return data2json('1', data = random)
+
+
+@app.route('/api/delete_meet', methods=['POST'])
+def delete_meet():  # 删除信息
+    if request.method == 'POST':
+        id = request.form['id']
+        user = Meet_advisory.query.filter_by(id = id).first()
+        try:
+            db.session.delete(user)
+            db.session.commit()
+        except OperationalError, e:
+            print e.message
+            db.session.rollback()
+            return data2json('2', msg = '信息删除错误，请重试')
+        return data2json('1')
 
 
 @app.route('/api/all_meet', methods=['GET', 'POST'])

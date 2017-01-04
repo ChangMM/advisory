@@ -10,6 +10,7 @@
           <th>联系电话</th>
           <th>常用邮箱</th>
           <th>预览</th>
+          <th>操作</th>
         </tr>
       </thead>
       <tbody>
@@ -21,6 +22,7 @@
           <td>{{ meet.phone }}</td>
           <td>{{ meet.email }}</td>
           <td><span class="preview" v-on:click = 'f_preview(meet)'>详细信息</span></td>
+          <td><span class=" delete" v-on:click = 'f_delete(meet.id)'>删除</span></td>
         </tr>
       </tbody>
     </table>
@@ -52,6 +54,19 @@ export default {
     f_preview: function (item) {
       this.m_item = item
       this.m_preview = true
+    },
+    f_delete: function (id) {
+      this.$http.post('/api/delete_meet', {
+        id: id
+      }).then(function (response) {
+        let body = response.body
+        if (body.status === 1) {
+          this.$warn('删除成功')
+          this.f_get_meet()
+        } else {
+          this.$warn(body.msg)
+        }
+      })
     },
     f_get_meet: function () {
       this.$http.get('/api/all_meet').then(function (response) {
@@ -88,7 +103,7 @@ export default {
       .random{
         color:$main-color;
       }
-      .preview{
+      .preview,.delete{
         color: $main-color;
         cursor: pointer;
         &:hover{

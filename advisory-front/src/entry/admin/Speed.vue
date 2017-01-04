@@ -10,6 +10,7 @@
           <th>联系电话</th>
           <th>常用邮箱</th>
           <th>预览</th>
+          <th>操作</th>
         </tr>
       </thead>
       <tbody>
@@ -21,6 +22,7 @@
           <td>{{ speed.phone }}</td>
           <td>{{ speed.email }}</td>
           <td><span class="preview" v-on:click = 'f_preview(speed)'>详细信息</span></td>
+          <td><span class="delete" v-on:click = 'f_delete(speed.id)'>删除</span></td>
         </tr>
       </tbody>
     </table>
@@ -61,6 +63,19 @@ export default {
         }
       })
     },
+    f_delete: function (id) {
+      this.$http.post('/api/delete_speed', {
+        id: id
+      }).then(function (response) {
+        let body = response.body
+        if (body.status === 1) {
+          this.$warn('删除成功')
+          this.f_get_speed()
+        } else {
+          this.$warn(body.msg)
+        }
+      })
+    },
   },
   components: {
     Preview
@@ -85,7 +100,7 @@ export default {
       td, th{
         border:1px solid #ddd;
       }
-      .preview{
+      .preview,.delete{
         color: $main-color;
         cursor: pointer;
         &:hover{

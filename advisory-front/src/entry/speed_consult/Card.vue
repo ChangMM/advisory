@@ -303,7 +303,7 @@ export default {
   data () {
     return {
       m_total: 9,
-      m_card: 3,
+      m_card: 1,
       m_result: '',
       m_area: '', // 占地面积
       m_business_area: '',

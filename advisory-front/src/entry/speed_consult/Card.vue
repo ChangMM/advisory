@@ -81,10 +81,11 @@
             </div>
           </div>
         </div>
-        <div class="section has-title" v-show="m_step==2">
+        <div class="section has-title has-more-padding" v-show="m_step==2">
           <h3 class="section-title">二、地理位置</h3>
           <div class="question-title">
-            <span>所在城市：</span><input type="text" v-model='m_city_text'>
+            <span>所在城市</span><input type="text" v-model='m_city_text'>
+            <p style='font-size:14px;'>城市等级：</p>
           </div>
           <div class="question padding-big" v-bind:data-section='m_step' v-on:click='f_choose($event)'>
             <div class="answer-item" data-city='省会城市'>
@@ -105,7 +106,13 @@
           <h3 class="section-title">三、用地条件 <span class="title-tip">占用面积</span></h3>
           <div class="question input" v-bind:data-section='m_step'>
             <div class="answer-item">
+              <p class='item-title'>赛车场用地面积</p>
               <input type="text" autofocus='true' v-model="m_area">
+              <span class='input-tip'>亩</span>
+            </div>
+            <div class="answer-item">
+              <p class='item-title'>配套商业用地面积</p>
+              <input type="text" autofocus='true' v-model="m_business_area">
               <span class='input-tip'>亩</span>
             </div>
           </div>
@@ -177,7 +184,7 @@
               <span class='input-tip'>万元</span>
             </div>
             <div class="answer-item">
-              <p class='item-title'>用于配套商业的资金</p>
+              <p class='item-title'>用于配套商业的建设资金</p>
               <input type="text" autofocus='true' v-model="m_business_money">
               <span class='input-tip'>亿元</span>
             </div>
@@ -296,9 +303,10 @@ export default {
   data () {
     return {
       m_total: 9,
-      m_card: 1,
+      m_card: 3,
       m_result: '',
       m_area: '', // 占地面积
+      m_business_area: '',
       m_city: '', // 城市
       m_land: [], // 地形
       m_type: [],
@@ -348,12 +356,14 @@ export default {
       }
       currentTarget.classList.add('disable')
       currentTarget.innerHTML = '正在生成结果...'
+      this.m_result = this.f_result()
       this.$http.post('/api/add_speed', {
         province : this.m_province_text,
         district : this.m_district,
         city : this.m_city,
         city_type : this.m_city_text,
         area : this.m_area,
+        business_area : this.m_business_area,
         land : this.m_land.join('，'),
         land_type : this.m_type.join('，'),
         dis_high : this.m_dis_high,
@@ -370,7 +380,8 @@ export default {
         phone : this.m_phone,
         job : this.m_job,
         workplace : this.m_workplace,
-        email : this.m_email
+        email : this.m_email,
+        result : this.m_result
       }).then(function (response) {
         if (response.body.status === 1) {
           currentTarget.classList.remove('disable')
@@ -404,7 +415,17 @@ export default {
     f_check_card: function () {
       switch (this.m_card) {
         case 3:
-          return this.m_name !== '' && this.m_email !== '' && this.m_workplace !== ''  && this.m_phone !== '' && this.m_job !== ''
+          if (this.m_name === '' || this.m_email === '' || this.m_workplace === ''  || this.m_phone === '' || this.m_job === '') {
+            this.$warn('有信息为空，请补充完整')
+            return false
+          } else {
+            if (!this.f_check_email(this.m_email)) {
+              this.$warn('邮箱格式有误')
+              return false
+            } else {
+              return true
+            }
+          }
           break
       }
       return true
@@ -421,21 +442,47 @@ export default {
       }
       return false
     },
+    f_check_email: function (email) {
+      if (email !== '') {
+        let reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/
+        let isok = reg.test(email)
+        if (!isok) {
+          return false
+        } else {
+          return true
+        }
+      } else {
+        return false
+      }
+    },
     f_check: function () {
       switch (this.m_step) {
         case 1:
-          return this.m_district !== '' && this.m_province_text !== ''
-          break
-        case 2:
-          return this.m_city !== '' && this.m_city_text !== ''
-          break
-        case 3:
-          if (!this.f_check_num(this.m_area)) {
-            this.$warn('占地面积只能为数字')
+          if (this.m_district === '' && this.m_province_text === '') {
+            this.$warn('请填写并选择所在地区')
             return false
           } else {
             return true
           }
+          break
+        case 2:
+          if (this.m_city === '' && this.m_city_text === '') {
+            this.$warn('请填写并选择城市级别')
+            return false
+          } else {
+            return true
+          }
+          break
+        case 3:
+          if (!this.f_check_num(this.m_area)) {
+            this.$warn('赛车场用地面积只能为数字')
+            return false
+          }
+          if (!this.f_check_num(this.m_business_area)) {
+            this.$warn('配套商业用地面积只能为数字')
+            return false
+          }
+          return true
           break
         case 4:
           return this.m_land.length !== 0
@@ -498,10 +545,12 @@ export default {
 
       if (parseInt(this.m_area) < 100) {
         this.m_result += '卡丁车或城市 SUV 赛道。\r\n'
-      } else if (parseInt(this.m_area) >= 100 && parseInt(this.m_area) <300) {
+      } else if (parseInt(this.m_area) >= 100 && parseInt(this.m_area) < 300) {
         this.m_result += '体验赛道。\r\n'
-      } else if (parseInt(this.m_area) >= 300) {
+      } else if (parseInt(this.m_area) >= 300 && parseInt(this.m_area) < 2000) {
         this.m_result += '国际赛道。\r\n'
+      } else if (parseInt(this.m_area) >= 2000) {
+        this.m_result += '国际一级赛道。\r\n'
       }
 
       this.m_result +='现有资金适合建设'
@@ -509,8 +558,10 @@ export default {
         this.m_result += '卡丁车或城市 SUV 赛道。\r\n'
       } else if (parseInt(this.m_center_money) >= 2000 && parseInt(this.m_area) < 15000) {
         this.m_result += '体验赛道。\r\n'
-      } else if (parseInt(this.m_center_money) >= 15000) {
+      } else if (parseInt(this.m_center_money) >= 15000 && parseInt(this.m_center_money) < 100000) {
         this.m_result += '国际赛道。\r\n'
+      } else if (parseInt(this.m_center_money) >= 100000) {
+        this.m_result += '国际一级赛道。\r\n'
       }
       return this.m_result
     },
@@ -726,6 +777,9 @@ export default {
     position: relative;
     box-sizing: border-box;
     &.has-title{
+      &.has-more-padding{
+        padding-top: 90px;
+      }
       padding-top: 70px;
       .question-title{
         height:30px;

@@ -266,16 +266,44 @@ export default {
       }
       return false
     },
+    f_check_email: function (email) {
+      if (email !== '') {
+        let reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/
+        let isok = reg.test(email)
+        if (!isok) {
+          return false
+        } else {
+          return true
+        }
+      } else {
+        return false
+      }
+    },
     f_start: function () {
       this.m_card++
     },
     f_check: function () {
       switch (this.m_step) {
         case 1:
-          return this.m_phone !== '' && this.m_name !== '' && this.m_email !== ''
+          if (this.m_phone === '' || this.m_name === '' || this.m_email === '') {
+            this.$warn('信息不能为空')
+            return false
+          } else {
+            if (!this.f_check_email(this.m_email)) {
+              this.$warn('邮箱格式错误')
+              return false
+            } else {
+              return true
+            }
+          }
           break
         case 2:
-          return this.m_job !== '' && this.m_workplace !== '' && this.m_radio_1 !== ''
+          if (this.m_job === '' || this.m_workplace === '' || this.m_radio_1 === '') {
+            this.$warn('信息不能为空')
+            return false
+          } else {
+            return true
+          }
           break
         case 3:
           if (!this.f_check_num(this.m_area)) {

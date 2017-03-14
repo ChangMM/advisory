@@ -25,6 +25,7 @@ class Speed_advisory(db.Model):
     city = db.Column(db.String(25), default='')
     city_type = db.Column(db.String(25), default='')
     area = db.Column(db.String(25), default='')
+    business_area = db.Column(db.String(25), default='')
     land = db.Column(db.String(25), default='')
     land_type = db.Column(db.String(25), default='')
     dis_high = db.Column(db.String(25), default='')
@@ -42,6 +43,7 @@ class Speed_advisory(db.Model):
     job = db.Column(db.String(25), default='')
     workplace = db.Column(db.String(25), default='')
     email = db.Column(db.String(25), default='')
+    result = db.Column(db.String(640), default='')
 
 
 class Meet_advisory(db.Model):
@@ -127,6 +129,7 @@ def add_speed():  # 新增信息
         city = request.form['city']
         city_type = request.form['city_type']
         area = request.form['area']
+        business_area = request.form['business_area']
         land = request.form['land']
         land_type = request.form['land_type']
         dis_high = request.form['dis_high']
@@ -144,9 +147,10 @@ def add_speed():  # 新增信息
         job = request.form['job']
         workplace = request.form['workplace']
         email = request.form['email']
+        result = request.form['result']
 
-        user = Speed_advisory(province = province, district = district, city = city, city_type = city_type, area = area, land = land, land_type = land_type,
-            dis_high = dis_high, dis_center = dis_center, dis_airplane = dis_airplane, center_money = center_money, business_money = business_money,
+        user = Speed_advisory(province = province, district = district, city = city, city_type = city_type, area = area, land = land, land_type = land_type, business_area = business_area,
+            dis_high = dis_high, dis_center = dis_center, dis_airplane = dis_airplane, center_money = center_money, business_money = business_money, result = result,
             people_num = people_num, people_200_num = people_200_num, view_type = view_type, city_num = city_num, has_place = has_place,name = name, email = email,phone = phone, job = job, workplace = workplace)
         try:
             db.session.add(user)
@@ -264,7 +268,7 @@ def data2json(status, **args):
 
 
 def speed_instance2dic(instance):
-    comment_dic = {}.fromkeys(('id' ,'province', 'district', 'city', 'city_type', 'area', 'land', 'land_type',
+    comment_dic = {}.fromkeys(('id' ,'province', 'district', 'city', 'city_type', 'area','business_area', 'land', 'land_type', 'result',
             'dis_high', 'dis_center', 'dis_airplane', 'center_money', 'business_money', 'people_num',
             'people_200_num', 'view_type', 'city_num', 'has_place', 'name', 'email', 'phone', 'job', 'workplace'))
     comment_dic['id'] = instance.id
@@ -272,6 +276,7 @@ def speed_instance2dic(instance):
     comment_dic['district'] = instance.district
     comment_dic['city'] = instance.city
     comment_dic['area'] = instance.area
+    comment_dic['business_area'] = instance.business_area
     comment_dic['city_type'] = instance.city_type
     comment_dic['land'] = instance.land
     comment_dic['land_type'] = instance.land_type
@@ -291,6 +296,7 @@ def speed_instance2dic(instance):
     comment_dic['phone'] = instance.phone
     comment_dic['job'] = instance.job
     comment_dic['workplace'] = instance.workplace
+    comment_dic['result'] = instance.result
     return comment_dic
 
 

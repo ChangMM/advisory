@@ -28,7 +28,8 @@
         <tr>
           <td>用地条件</td>
           <td>
-            <p><span class="label">占地面积：</span>{{item.area}}（亩）</p>
+            <p><span class="label">赛车场地占地面积：</span>{{item.area}}（亩）</p>
+            <p><span class="label">配套商业占地面积：</span>{{item.business_area}}（亩）</p>
             <p><span class="label">用地性质：</span>{{item.land}}</p>
             <p><span class="label">地形地貌：</span>{{item.land_type}}</p>
           </td>
@@ -61,6 +62,12 @@
           <td>
             <p><span class="label">300km 范围辐射城市(地级市)： </span>{{item.city_num}}（个）</p>
             <p><span class="label">500km 范围是否已有国际级赛车场：</span>{{item.has_place}}</p>
+          </td>
+        </tr>
+        <tr>
+          <td>咨询结果</td>
+          <td>
+            <p>{{item.result}}</p>
           </td>
         </tr>
       </table>

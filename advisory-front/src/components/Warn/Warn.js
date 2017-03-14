@@ -29,7 +29,7 @@ function install (Vue) {
     if (callback) {
       setTimeout(function () {
         callback && callback()
-      }, 1000)
+      }, 2000)
     }
   }
 }
